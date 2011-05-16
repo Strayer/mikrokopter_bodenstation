@@ -67,13 +67,7 @@ public:
 
 signals:
 
-    /**
-     * Signal called when data is received from the serial port.
-     * This signal is line based, data is grouped by line and a signal
-     * is emitted for each line.
-     * \param data the line of text just received.
-     */
-    void lineReceived(QString data);
+	void dataReceived(QByteArray data);
 
 private:
     /**

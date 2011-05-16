@@ -79,19 +79,5 @@ QAsyncSerial::~QAsyncSerial()
 
 void QAsyncSerial::readCallback(const char *data, size_t size)
 {
-    pimpl->receivedData+=QString::fromAscii(data,size);
-    if(pimpl->receivedData.contains('\n'))
-    {
-        QStringList lineList=pimpl->receivedData.split(QRegExp("\r\n|\n"));
-        //If line ends with \n lineList will contain a trailing empty string
-        //otherwise it will contain part of a line without the terminating \n
-        //In both cases lineList.at(lineList.size()-1) should not be sent
-        //with emit.
-        int numLines=lineList.size()-1;
-        pimpl->receivedData=lineList.at(lineList.size()-1);
-        for(int i=0;i<numLines;i++)
-        {
-            emit lineReceived(lineList.at(i));
-        }
-    }
+	emit dataReceived(QByteArray::fromRawData(data, size));
 }
