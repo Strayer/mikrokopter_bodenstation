@@ -84,5 +84,5 @@ QAsyncSerial::~QAsyncSerial()
 
 void QAsyncSerial::readCallback(const char *data, size_t size)
 {
-	emit dataReceived(QByteArray::fromRawData(data, size));
+	emit dataReceived(QByteArray::fromRawData(data, (int) size));
 }

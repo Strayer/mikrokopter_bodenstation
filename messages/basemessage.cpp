@@ -1,6 +1,8 @@
 #include "basemessage.h"
 #include "boost/crc.hpp"
 
+#include "helper_functions.h"
+
 #include <QtDebug>
 
 BaseMessage::BaseMessage(int type) : _messageType(type)
@@ -19,13 +21,7 @@ QByteArray BaseMessage::typeIntToBytes()
 
 QByteArray BaseMessage::encodeForWriting()
 {
-	QByteArray tmp;
-
-	QByteArray type;
-	type.append((messageType() & 0xFF0000) >> 16);
-	type.append((messageType() & 0xFF00) >> 8);
-	type.append(messageType() & 0xFF);
-
+	QByteArray type = intToQByteArray(messageType(), 3);
 	QByteArray data = prepareData();
 	QByteArray crc8 = BaseMessage::generateCRC8(QByteArray().append(type).append(data));
 
@@ -33,6 +29,7 @@ QByteArray BaseMessage::encodeForWriting()
 	qDebug() << "Data:" << data.toHex();
 	qDebug() << "CRC8:" << crc8.toHex();
 
+	QByteArray tmp;
 	tmp.append(STX);
 	tmp.append(STX);
 	tmp.append(type);

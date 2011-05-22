@@ -1,6 +1,7 @@
 #ifndef PINGMESSAGE_H
 #define PINGMESSAGE_H
 
+#include <stdint.h>
 #include "basemessage.h"
 
 class PingMessage : public BaseMessage
@@ -8,10 +9,10 @@ class PingMessage : public BaseMessage
 public:
     PingMessage();
 
-	int sequenceNumber();
+	uint16_t sequenceNumber();
 
 protected:
-	int _sequenceNumber;
+	uint16_t _sequenceNumber;
 
 private:
 	QByteArray prepareData();

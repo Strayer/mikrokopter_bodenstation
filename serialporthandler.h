@@ -2,7 +2,7 @@
 #define SERIALPORTHANDLER_H
 
 #include "qasyncserial/QAsyncSerial.h"
-
+#include "SerialPort.h"
 class QByteArray;
 #include <QObject>
 
@@ -11,7 +11,7 @@ class SerialPortHandler : QObject
 	Q_OBJECT
 
 public:
-	SerialPortHandler(QString serialDeviceName, QObject *parent = 0);
+	SerialPortHandler(SerialPort serialPort, QObject *parent = 0);
 
 	QByteArray read(int length);
 	void sendTestPing();
@@ -21,6 +21,7 @@ private slots:
 
 private:
 	QAsyncSerial serial;
+	SerialPort serialPort;
 };
 
 #endif // SERIALPORTHANDLER_H

@@ -17,6 +17,8 @@ public:
     void setFriendlyName(QString name) { _friendlyName = name; }
     QString friendlyName() const { return _friendlyName; }
 
+	QByteArray deviceName() { return QString("COM%1").arg(_portNum).toAscii(); }
+
 private:
     uint _portNum;
     QString _friendlyName;

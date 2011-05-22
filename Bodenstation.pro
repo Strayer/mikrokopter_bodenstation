@@ -9,7 +9,8 @@ HEADERS += \
 	qasyncserial/QAsyncSerial.h \
 	qasyncserial/AsyncSerial.h \
     messages/basemessage.h \
-    messages/pingmessage.h
+    messages/pingmessage.h \
+    helper_functions.h
 
 SOURCES += \
 	main.cpp \
@@ -21,7 +22,8 @@ SOURCES += \
 	qasyncserial/QAsyncSerial.cpp \
 	qasyncserial/AsyncSerial.cpp \
     messages/basemessage.cpp \
-    messages/pingmessage.cpp
+    messages/pingmessage.cpp \
+    helper_functions.cpp
 
 FORMS += \
 	serialportdialog.ui

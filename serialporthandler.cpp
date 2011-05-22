@@ -4,22 +4,20 @@
 
 #include <QtDebug>
 
-SerialPortHandler::SerialPortHandler(QString serialDeviceName, QObject *parent) : QObject(parent)
+SerialPortHandler::SerialPortHandler(SerialPort serialPort, QObject *parent) : QObject(parent), serialPort(serialPort)
 {
+	serial.open(serialPort.deviceName(), 2400);
 	connect(&serial, SIGNAL(dataReceived(QByteArray)), this, SLOT(serialSlotReceivedData(QByteArray)));
-	serial.open(serialDeviceName, 2400);
 }
 
 void SerialPortHandler::serialSlotReceivedData(QByteArray line)
 {
-	qDebug() << line;
+	qDebug() << QString(line).toAscii();
 }
 
 void SerialPortHandler::sendTestPing()
 {
 	PingMessage msg;
-
-	qDebug() << msg.encodeForWriting();
 
 	serial.write(msg.encodeForWriting());
 }

@@ -6,6 +6,8 @@
 #include <QTimer>
 #include <QDebug>
 
+#include <QtGui>
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
 {
@@ -19,6 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	SerialPort port = dlg->getSelectedSerialPort();
 
-	serial = new SerialPortHandler(port.friendlyName().toAscii().constData());
+	serial = new SerialPortHandler(port, this);
+
+	QPushButton *button = new QPushButton();
+	setCentralWidget(button);
+	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()));
+}
+
+void MainWindow::buttonClicked()
+{
 	serial->sendTestPing();
 }
