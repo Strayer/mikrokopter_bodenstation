@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-class SerialPortDevice;
+class SerialPortHandler;
 
 class MainWindow : public QMainWindow
 {
@@ -12,7 +12,7 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 
 private:
-	SerialPortDevice *serial;
+	SerialPortHandler *serial;
 
 signals:
 

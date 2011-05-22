@@ -22,7 +22,7 @@ public:
     /**
      * Default constructor
      */
-    QAsyncSerial();
+	QAsyncSerial();
 
     /**
      * Constructor. Opens a serial port
@@ -59,6 +59,7 @@ public:
      * Write a string to the serial port
      */
     void write(QString data);
+	void write(QByteArray data);
 
     /**
      * Destructor

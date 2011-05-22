@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "serialportdialog.h"
 
-#include "serialportdevice.h"
+#include "serialporthandler.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -19,5 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	SerialPort port = dlg->getSelectedSerialPort();
 
-	serial = new SerialPortDevice(port.friendlyName().toAscii().constData());
+	serial = new SerialPortHandler(port.friendlyName().toAscii().constData());
+	serial->sendTestPing();
 }

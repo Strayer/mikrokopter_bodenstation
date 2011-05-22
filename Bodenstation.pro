@@ -1,11 +1,15 @@
-QT += core
+QT += core gui
 
 HEADERS += \
 	mainwindow.h \
 	serialportdialog.h \
 	enumser.h \
 	SerialPort.h \
-    serialportdevice.h
+	serialporthandler.h \
+	qasyncserial/QAsyncSerial.h \
+	qasyncserial/AsyncSerial.h \
+    messages/basemessage.h \
+    messages/pingmessage.h
 
 SOURCES += \
 	main.cpp \
@@ -13,12 +17,18 @@ SOURCES += \
 	serialportdialog.cpp \
 	enumser.cpp \
 	SerialPort.cpp \
-    serialportdevice.cpp
+	serialporthandler.cpp \
+	qasyncserial/QAsyncSerial.cpp \
+	qasyncserial/AsyncSerial.cpp \
+    messages/basemessage.cpp \
+    messages/pingmessage.cpp
 
 FORMS += \
 	serialportdialog.ui
 
 LIBS+= -lwinspool
 
-INCLUDEPATH+= E:/Entwicklung/lib/msvc_x86_64/boost-1.45.0/include
-LIBS+= -LE:/Entwicklung/lib/msvc_x86_64/boost-1.45.0/lib
+DEFINES += _WIN32_WINNT=0x0501
+
+INCLUDEPATH+= E:/dev/lib/msvc_x86_64/boost-1.46.1/include
+LIBS+= -LE:/dev/lib/msvc_x86_64/boost-1.46.1/lib

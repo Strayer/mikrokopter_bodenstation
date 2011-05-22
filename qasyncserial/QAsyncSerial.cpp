@@ -25,7 +25,7 @@ QAsyncSerial::QAsyncSerial(): pimpl(new QAsyncSerialImpl)
 QAsyncSerial::QAsyncSerial(QString devname, unsigned int baudrate)
         : pimpl(new QAsyncSerialImpl)
 {
-    open(devname,baudrate);
+	open(devname,baudrate);
 }
 
 void QAsyncSerial::open(QString devname, unsigned int baudrate)
@@ -64,6 +64,11 @@ bool QAsyncSerial::errorStatus()
 void QAsyncSerial::write(QString data)
 {
     pimpl->serial.writeString(data.toStdString());
+}
+
+void QAsyncSerial::write(QByteArray data)
+{
+	pimpl->serial.write(data.constData(), data.length());
 }
 
 QAsyncSerial::~QAsyncSerial()
