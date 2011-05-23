@@ -10,7 +10,8 @@ HEADERS += \
 	qasyncserial/AsyncSerial.h \
     messages/basemessage.h \
     messages/pingmessage.h \
-    helper_functions.h
+    helper_functions.h \
+    messages/all_messages.h
 
 SOURCES += \
 	main.cpp \

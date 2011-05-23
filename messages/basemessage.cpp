@@ -42,7 +42,10 @@ QByteArray BaseMessage::encodeForWriting()
 
 QByteArray BaseMessage::escapeByteArray(QByteArray data)
 {
-	return data;//.replace();
+	return data
+			.replace(ESC, QByteArray().append(ESC).append(ESC))
+			.replace(STX, QByteArray().append(ESC).append(STX))
+			.replace(ETB, QByteArray().append(ESC).append(ETB));
 }
 
 QByteArray BaseMessage::generateCRC8(QByteArray data)

@@ -1,27 +1,40 @@
 #ifndef SERIALPORTHANDLER_H
 #define SERIALPORTHANDLER_H
 
-#include "qasyncserial/QAsyncSerial.h"
+#include "qasyncserial/AsyncSerial.h"
 #include "SerialPort.h"
+#include "messages/basemessage.h"
 class QByteArray;
+class QMutex;
+class QWaitCondition;
 #include <QObject>
+#include <QQueue>
 
-class SerialPortHandler : QObject
+class SerialPortHandler : public QObject
 {
 	Q_OBJECT
 
 public:
 	SerialPortHandler(SerialPort serialPort, QObject *parent = 0);
+	~SerialPortHandler();
 
 	QByteArray read(int length);
 	void sendTestPing();
 
-private slots:
-	void serialSlotReceivedData(QByteArray line);
+	void enqueueMessage(BaseMessage *msg);
+
+public slots:
+	void start();
 
 private:
-	QAsyncSerial serial;
+	void serialSlotReceivedData(const char *data, size_t size);
+
+	CallbackAsyncSerial serial;
 	SerialPort serialPort;
+
+	QMutex *m_enqueueMessageMutex;
+	QWaitCondition *m_waitCondition;
+	QQueue<BaseMessage*> *m_messageQueue;
 };
 
 #endif // SERIALPORTHANDLER_H

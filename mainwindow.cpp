@@ -20,8 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	}
 
 	SerialPort port = dlg->getSelectedSerialPort();
-
-	serial = new SerialPortHandler(port, this);
+	serial = new SerialPortHandler(port);
+	serial->moveToThread(&serialPortThread);
+	connect(&serialPortThread, SIGNAL(started()), serial, SLOT(start()));
+	serialPortThread.start();
 
 	QPushButton *button = new QPushButton();
 	setCentralWidget(button);

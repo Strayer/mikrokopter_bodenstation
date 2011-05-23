@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QThread>
 
 class SerialPortHandler;
 
@@ -13,6 +14,7 @@ public:
 
 private:
 	SerialPortHandler *serial;
+	QThread serialPortThread;
 
 signals:
 
