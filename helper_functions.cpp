@@ -1,6 +1,5 @@
 #include "helper_functions.h"
 
-
 QByteArray intToQByteArray(uint32_t integer, int numberOfBytes)
 {
 	QByteArray tmp;
@@ -15,4 +14,14 @@ QByteArray intToQByteArray(uint32_t integer, int numberOfBytes)
 	}
 
 	return tmp;
+}
+
+uint32_t QByteArrayToInt(QByteArray bytes)
+{
+	uint32_t theInt = 0;
+
+	for (int i = 0; i < bytes.length(); i++)
+		theInt+= bytes.at(i) << 8 * (bytes.length() - 1 - i);
+
+	return theInt;
 }

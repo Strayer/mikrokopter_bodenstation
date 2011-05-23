@@ -11,7 +11,7 @@ public:
 
 	uint16_t sequenceNumber();
 
-protected:
+private:
 	uint16_t _sequenceNumber;
 
 private:

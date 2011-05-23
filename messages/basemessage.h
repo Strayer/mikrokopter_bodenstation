@@ -11,6 +11,9 @@ class BaseMessage
 {
 public:
 	BaseMessage(int type);
+	BaseMessage();
+
+	bool isNull();
 
 	int messageType();
 
@@ -28,12 +31,16 @@ public:
 		};
 	};
 
+	static BaseMessage fromRawData(QByteArray rawData);
+
+	virtual void setData();
 
 protected:
 	virtual QByteArray prepareData();
 
 private:
-	int _messageType;
+	int m_messageType;
+	bool m_isNull;
 
 	QByteArray typeIntToBytes();
 

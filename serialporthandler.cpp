@@ -11,6 +11,8 @@ SerialPortHandler::SerialPortHandler(SerialPort serialPort, QObject *parent) : Q
 	m_waitCondition = new QWaitCondition();
 	serial.open(QString(serialPort.deviceName()).toStdString(), 2400);
 	serial.setCallback(bind(&SerialPortHandler::serialSlotReceivedData, this, _1, _2));
+
+	m_messageProcessingState = MessageProcessingState::Inactive;
 }
 
 SerialPortHandler::~SerialPortHandler()
@@ -22,8 +24,33 @@ SerialPortHandler::~SerialPortHandler()
 
 void SerialPortHandler::serialSlotReceivedData(const char *data, size_t size)
 {
-	QByteArray line = QByteArray::fromRawData(data, (int) size);
-	qDebug() << QString(line).toAscii();
+	for (int i = 0; i < size; i++)
+	{
+		char currChar = data[i];
+
+		if (m_messageProcessingState != MessageProcessingState::AfterEscape && currChar == STX)
+		{
+			m_messageProcessingBuffer.clear();
+			m_messageProcessingState = MessageProcessingState::InMessage;
+		}
+		else if (m_messageProcessingState == MessageProcessingState::InMessage && currChar == ESC)
+			m_messageProcessingState = MessageProcessingState::AfterEscape;
+		else if (m_messageProcessingState == MessageProcessingState::InMessage && currChar == ETB)
+			m_messageProcessingState = MessageProcessingState::AfterMessage;
+		else if (m_messageProcessingState == MessageProcessingState::AfterEscape || m_messageProcessingState == MessageProcessingState::InMessage)
+		{
+			m_messageProcessingBuffer.append(currChar);
+
+			if (m_messageProcessingState == MessageProcessingState::AfterEscape)
+				m_messageProcessingState = MessageProcessingState::InMessage;
+		}
+
+		if (m_messageProcessingState == MessageProcessingState::AfterMessage)
+		{
+			BaseMessage msg = BaseMessage::fromRawData(m_messageProcessingBuffer);
+			qDebug() << msg.messageType();
+		}
+	}
 }
 
 void SerialPortHandler::sendTestPing()

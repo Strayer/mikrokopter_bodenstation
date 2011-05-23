@@ -10,7 +10,8 @@ HEADERS += \
     messages/basemessage.h \
     messages/pingmessage.h \
     helper_functions.h \
-    messages/all_messages.h
+    messages/all_messages.h \
+    messages/pongmessage.h
 
 SOURCES += \
 	main.cpp \
@@ -22,7 +23,8 @@ SOURCES += \
 	AsyncSerial.cpp \
     messages/basemessage.cpp \
     messages/pingmessage.cpp \
-    helper_functions.cpp
+    helper_functions.cpp \
+    messages/pongmessage.cpp
 
 FORMS += \
 	serialportdialog.ui

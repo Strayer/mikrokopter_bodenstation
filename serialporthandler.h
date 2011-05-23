@@ -35,6 +35,13 @@ private:
 	QMutex *m_enqueueMessageMutex;
 	QWaitCondition *m_waitCondition;
 	QQueue<BaseMessage*> *m_messageQueue;
+
+	int m_messageProcessingState;
+	QByteArray m_messageProcessingBuffer;
+	class MessageProcessingState {
+	public:
+		enum { Inactive, InMessage, AfterMessage, AfterEscape };
+	};
 };
 
 #endif // SERIALPORTHANDLER_H

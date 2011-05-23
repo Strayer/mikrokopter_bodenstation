@@ -5,5 +5,6 @@
 #include <stdint.h>
 
 QByteArray intToQByteArray(uint32_t integer, int numberOfBytes);
+uint32_t QByteArrayToInt(QByteArray bytes);
 
 #endif // HELPER_FUNCTIONS_H
