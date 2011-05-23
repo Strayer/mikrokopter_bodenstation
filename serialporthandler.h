@@ -1,7 +1,7 @@
 #ifndef SERIALPORTHANDLER_H
 #define SERIALPORTHANDLER_H
 
-#include "qasyncserial/AsyncSerial.h"
+#include "AsyncSerial.h"
 #include "SerialPort.h"
 #include "messages/basemessage.h"
 class QByteArray;

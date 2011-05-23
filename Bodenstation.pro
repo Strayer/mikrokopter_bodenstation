@@ -6,8 +6,7 @@ HEADERS += \
 	enumser.h \
 	SerialPort.h \
 	serialporthandler.h \
-	qasyncserial/QAsyncSerial.h \
-	qasyncserial/AsyncSerial.h \
+	AsyncSerial.h \
     messages/basemessage.h \
     messages/pingmessage.h \
     helper_functions.h \
@@ -20,8 +19,7 @@ SOURCES += \
 	enumser.cpp \
 	SerialPort.cpp \
 	serialporthandler.cpp \
-	qasyncserial/QAsyncSerial.cpp \
-	qasyncserial/AsyncSerial.cpp \
+	AsyncSerial.cpp \
     messages/basemessage.cpp \
     messages/pingmessage.cpp \
     helper_functions.cpp
