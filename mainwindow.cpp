@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::buttonClicked()
 {
 	//for (int i = 0; i < 2000; i++)
-		serial->sendTestPing();
+	serial->sendTestPing();
 }
 
 void MainWindow::newMessageReceived(QSharedPointer<BaseMessage> msg)

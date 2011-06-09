@@ -4,7 +4,7 @@
 
 PingMessage::PingMessage() : BaseMessage(BaseMessage::MessageTypes::PING)
 {
-	static uint16_t seq_number = 126;
+	static uint16_t seq_number = 0;
 
 	_sequenceNumber = ++seq_number;
 }

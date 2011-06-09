@@ -13,7 +13,7 @@ BaseMessage::BaseMessage(int type) : m_messageType(type)
 
 BaseMessage::BaseMessage() : m_messageType(0)
 {
-	m_isNull = false;
+	m_isNull = true;
 }
 
 int BaseMessage::messageType()
