@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>256</width>
+    <width>297</width>
     <height>71</height>
    </rect>
   </property>
@@ -21,6 +21,10 @@
   </property>
   <property name="windowTitle">
    <string>Seriellen Port wählen</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/app-icon</normaloff>:/icons/app-icon</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -80,7 +84,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

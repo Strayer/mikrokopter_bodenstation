@@ -7,9 +7,10 @@
 class PingMessage : public BaseMessage
 {
 public:
-    PingMessage();
+	PingMessage();
 
 	uint16_t sequenceNumber();
+	QString toString();
 
 private:
 	uint16_t _sequenceNumber;

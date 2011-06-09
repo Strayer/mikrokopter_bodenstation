@@ -7,7 +7,7 @@
 SerialPortHandler::SerialPortHandler(SerialPort serialPort, QObject *parent) : QObject(parent), serialPort(serialPort)
 {
 	m_enqueueMessageMutex = new QMutex();
-	m_messageQueue = new QQueue<BaseMessage*>();
+	m_messageQueue = new QQueue< QSharedPointer<BaseMessage> >();
 	m_waitCondition = new QWaitCondition();
 	serial.open(QString(serialPort.deviceName()).toStdString(), 2400);
 	serial.setCallback(bind(&SerialPortHandler::serialSlotReceivedData, this, _1, _2));
@@ -47,19 +47,19 @@ void SerialPortHandler::serialSlotReceivedData(const char *data, size_t size)
 
 		if (m_messageProcessingState == MessageProcessingState::AfterMessage)
 		{
-			BaseMessage msg = BaseMessage::fromRawData(m_messageProcessingBuffer);
-			qDebug() << msg.messageType();
+			auto pointer = QSharedPointer<BaseMessage>(BaseMessage::fromRawData(m_messageProcessingBuffer));
+			emit newMessageReceived(pointer);
 		}
 	}
 }
 
 void SerialPortHandler::sendTestPing()
 {
-	PingMessage *msg = new PingMessage();
+	auto msg = QSharedPointer<BaseMessage>(new PingMessage());
 	enqueueMessage(msg);
 }
 
-void SerialPortHandler::enqueueMessage(BaseMessage *msg)
+void SerialPortHandler::enqueueMessage(QSharedPointer<BaseMessage> msg)
 {
 	QMutexLocker locker(m_enqueueMessageMutex);
 	qDebug() << "Fuege Nachricht" << QString::number(msg->messageType()).toAscii().toHex() << "zum Queue hinzu";
@@ -74,20 +74,17 @@ void SerialPortHandler::start()
 
 	forever {
 		m_enqueueMessageMutex->lock();
-		while (m_messageQueue->isEmpty())
+		if (m_messageQueue->isEmpty())
 		{
 			qDebug() << "Keine Nachrichten mehr im Queue... warte auf neue Nachrichten";
-			if (m_waitCondition->wait(m_enqueueMessageMutex))
-				qDebug() << "waitCondition gefeuert";
-			else
-				qDebug() << "waitCondition timeout";
-			QCoreApplication::processEvents();
+			m_waitCondition->wait(m_enqueueMessageMutex);
+			qDebug() << "waitCondition gefeuert";
 		}
-		BaseMessage *msg = m_messageQueue->dequeue();
+		QSharedPointer<BaseMessage> msg = m_messageQueue->dequeue();
 		qDebug() << "Sende Nachricht" << QString::number(msg->messageType()).toAscii().toHex();
 		QByteArray encodedMessage = msg->encodeForWriting();
 		serial.write(encodedMessage.constData(), encodedMessage.length());
-		delete msg;
+		emit messageSent(msg);
 		m_enqueueMessageMutex->unlock();
 	}
 }

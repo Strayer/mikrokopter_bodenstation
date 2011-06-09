@@ -9,6 +9,7 @@ class QMutex;
 class QWaitCondition;
 #include <QObject>
 #include <QQueue>
+#include <QSharedPointer>
 
 class SerialPortHandler : public QObject
 {
@@ -21,10 +22,14 @@ public:
 	QByteArray read(int length);
 	void sendTestPing();
 
-	void enqueueMessage(BaseMessage *msg);
+	void enqueueMessage(QSharedPointer<BaseMessage> msg);
 
 public slots:
 	void start();
+
+signals:
+	void newMessageReceived(QSharedPointer<BaseMessage>);
+	void messageSent(QSharedPointer<BaseMessage>);
 
 private:
 	void serialSlotReceivedData(const char *data, size_t size);
@@ -34,7 +39,7 @@ private:
 
 	QMutex *m_enqueueMessageMutex;
 	QWaitCondition *m_waitCondition;
-	QQueue<BaseMessage*> *m_messageQueue;
+	QQueue< QSharedPointer<BaseMessage> > *m_messageQueue;
 
 	int m_messageProcessingState;
 	QByteArray m_messageProcessingBuffer;

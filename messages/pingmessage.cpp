@@ -4,7 +4,7 @@
 
 PingMessage::PingMessage() : BaseMessage(BaseMessage::MessageTypes::PING)
 {
-	static uint16_t seq_number = 0;
+	static uint16_t seq_number = 126;
 
 	_sequenceNumber = ++seq_number;
 }
@@ -12,4 +12,9 @@ PingMessage::PingMessage() : BaseMessage(BaseMessage::MessageTypes::PING)
 QByteArray PingMessage::prepareData()
 {
 	return intToQByteArray(_sequenceNumber, 2);
+}
+
+QString PingMessage::toString()
+{
+	return QString("PingMessage (sequenceNumber: %1)").arg(_sequenceNumber);
 }

@@ -6,6 +6,7 @@
 #define ETB (char) 0x17
 
 #include <QByteArray>
+#include <QMetaType>
 
 class BaseMessage
 {
@@ -31,9 +32,10 @@ public:
 		};
 	};
 
-	static BaseMessage fromRawData(QByteArray rawData);
+	static BaseMessage* fromRawData(QByteArray rawData);
 
 	virtual void setData();
+	virtual QString toString();
 
 protected:
 	virtual QByteArray prepareData();

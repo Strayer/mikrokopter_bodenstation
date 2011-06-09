@@ -7,11 +7,12 @@
 class PongMessage : public BaseMessage
 {
 public:
-    PongMessage();
+	PongMessage();
 
 	uint16_t sequenceNumber();
+	QString toString();
 
-	static PongMessage fromRawData(QByteArray data);
+	static PongMessage* fromRawData(QByteArray data);
 
 private:
 	uint16_t _sequenceNumber;

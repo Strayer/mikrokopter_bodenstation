@@ -11,9 +11,9 @@ BaseMessage::BaseMessage(int type) : m_messageType(type)
 	m_isNull = false;
 }
 
-BaseMessage::BaseMessage()
+BaseMessage::BaseMessage() : m_messageType(0)
 {
-	m_isNull = true;
+	m_isNull = false;
 }
 
 int BaseMessage::messageType()
@@ -52,7 +52,7 @@ QByteArray BaseMessage::encodeForWriting()
 	return tmp;
 }
 
-BaseMessage BaseMessage::fromRawData(QByteArray rawData)
+BaseMessage* BaseMessage::fromRawData(QByteArray rawData)
 {
 	QByteArray crc8 = rawData.right(1);
 	QByteArray dataCRC8 = BaseMessage::generateCRC8(rawData.left(rawData.size()-1));
@@ -60,13 +60,13 @@ BaseMessage BaseMessage::fromRawData(QByteArray rawData)
 	if (crc8 != dataCRC8)
 	{
 		qDebug() << "Kaputte Nachricht:" << rawData.toHex();
-		return BaseMessage();
+		return new BaseMessage();
 	}
 
 	int type = QByteArrayToInt(rawData.left(3));
 	QByteArray data = rawData.mid(3, rawData.length()-4);
 
-	BaseMessage msg;
+	BaseMessage *msg = new BaseMessage();
 
 	switch (type)
 	{
@@ -107,4 +107,9 @@ QByteArray BaseMessage::prepareData()
 void BaseMessage::setData()
 {
 	return;
+}
+
+QString BaseMessage::toString()
+{
+	return QString("BaseMessage");
 }
