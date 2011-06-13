@@ -16,6 +16,8 @@ class MainWindow : public QMainWindow
 public:
 	explicit MainWindow(QWidget *parent = 0);
 
+	void enqueueMessage(QSharedPointer<BaseMessage> msg);
+
 private:
 	SerialPortHandler *serial;
 	QThread serialPortThread;

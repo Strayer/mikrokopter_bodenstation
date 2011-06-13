@@ -9,6 +9,8 @@
 #include <QtGui>
 #include <QtCore>
 
+#include <widgets/parameterswidget.h>
+
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
 {
@@ -41,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	QPushButton *button = new QPushButton();
 	button->setText("Ping senden");
 	layout->addWidget(button);
+
+	ParametersWidget *parametersWidget = new ParametersWidget(this);
+	layout->addWidget(parametersWidget);
 
 	setCentralWidget(new QWidget());
 	centralWidget()->setLayout(layout);
@@ -78,7 +83,12 @@ void MainWindow::messageSent(QSharedPointer<BaseMessage> msg)
 		msgList->scrollToBottom();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *)
 {
 	settings.setValue("window/geometry", saveGeometry());
+}
+
+void MainWindow::enqueueMessage(QSharedPointer<BaseMessage> msg)
+{
+	serial->enqueueMessage(msg);
 }

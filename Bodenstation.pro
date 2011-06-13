@@ -11,7 +11,12 @@ HEADERS += \
     messages/pingmessage.h \
     helper_functions.h \
     messages/all_messages.h \
-    messages/pongmessage.h
+    messages/pongmessage.h \
+    widgets/parameterswidget.h \
+    messages/setparametermessage.h \
+    messages/getparametermessage.h \
+    messages/curparametermessage.h \
+    messages/parameter_type_ids.h
 
 SOURCES += \
 	main.cpp \
@@ -24,7 +29,11 @@ SOURCES += \
     messages/basemessage.cpp \
     messages/pingmessage.cpp \
     helper_functions.cpp \
-    messages/pongmessage.cpp
+    messages/pongmessage.cpp \
+    widgets/parameterswidget.cpp \
+    messages/setparametermessage.cpp \
+    messages/getparametermessage.cpp \
+    messages/curparametermessage.cpp
 
 FORMS += \
 	serialportdialog.ui

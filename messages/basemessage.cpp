@@ -73,8 +73,18 @@ BaseMessage* BaseMessage::fromRawData(QByteArray rawData)
 	case MessageTypes::PONG:
 		msg = PongMessage::fromRawData(data);
 		break;
+	case MessageTypes::CUR_PARAMETER:
+		msg = CurParameterMessage::fromRawData(data);
+		break;
 	case MessageTypes::PING:
 		qDebug() << "BaseMessage::fromRawData: Nachricht PING kann nur gesendet werden";
+		break;
+	case MessageTypes::SET_PARAMETER:
+		qDebug() << "BaseMessage::fromRawData: Nachricht SET_PARAMETER kann nur gesendet werden";
+		break;
+	case MessageTypes::GET_PARAMETER:
+		qDebug() << "BaseMessage::fromRawData: Nachricht GET_PARAMETER kann nur gesendet werden";
+		break;
 	default:
 		qDebug() << "BaseMessage::fromRawData: Unbekannte Nachricht" << QByteArray().append(type).toHex();
 	}
