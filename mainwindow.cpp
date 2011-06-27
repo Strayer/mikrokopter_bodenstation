@@ -10,6 +10,7 @@
 #include <QtCore>
 
 #include <widgets/parameterswidget.h>
+#include <widgets/camerawidget.h>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
@@ -46,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ParametersWidget *parametersWidget = new ParametersWidget(this);
 	layout->addWidget(parametersWidget);
+
+	CameraWidget *cameraWidget = new CameraWidget();
+	layout->addWidget(cameraWidget);
 
 	setCentralWidget(new QWidget());
 	centralWidget()->setLayout(layout);

@@ -1,4 +1,4 @@
-QT += core gui
+QT += core gui opengl
 
 HEADERS += \
 	mainwindow.h \
@@ -16,7 +16,9 @@ HEADERS += \
     messages/setparametermessage.h \
     messages/getparametermessage.h \
     messages/curparametermessage.h \
-    messages/parameter_type_ids.h
+    messages/parameter_type_ids.h \
+    messages/proxymessage.h \
+    widgets/camerawidget.h
 
 SOURCES += \
 	main.cpp \
@@ -33,7 +35,9 @@ SOURCES += \
     widgets/parameterswidget.cpp \
     messages/setparametermessage.cpp \
     messages/getparametermessage.cpp \
-    messages/curparametermessage.cpp
+    messages/curparametermessage.cpp \
+    messages/proxymessage.cpp \
+    widgets/camerawidget.cpp
 
 FORMS += \
 	serialportdialog.ui
@@ -42,10 +46,16 @@ LIBS+= -lwinspool
 
 DEFINES += _WIN32_WINNT=0x0501
 
-INCLUDEPATH+= E:/dev/lib/msvc_x86_64/boost-1.46.1/include
-LIBS+= -LE:/dev/lib/msvc_x86_64/boost-1.46.1/lib
+INCLUDEPATH+= E:/dev/lib/msvc_x86_64/boost-1.46.1/include \
+	E:/dev/lib/msvc_x86_64/opencv-svn/include
+LIBS+= -LE:/dev/lib/msvc_x86_64/boost-1.46.1/lib \
+	-LE:/dev/lib/msvc_x86_64/opencv-svn/lib \
+	-lopencv_highgui229 \
+	-lopencv_core229
 
 RESOURCES += \
     resources.qrc
 
 RC_FILE = icon.rc
+
+
