@@ -178,7 +178,9 @@ void ParametersWidget::getParameters()
 	foreach (ParameterSpinBox *le, m_parameterSpinBoxes)
 	{
 		auto msg = QSharedPointer<GetParameterMessage>(new GetParameterMessage(le->parameterTypeId()));
-		m_mainWindow->enqueueMessage(msg);
+		auto proxymsg = QSharedPointer<ProxyMessage>(new ProxyMessage());
+		proxymsg->setInnerMessage(msg);
+		m_mainWindow->enqueueMessage(proxymsg);
 	}
 }
 
@@ -189,7 +191,9 @@ void ParametersWidget::sendParameters()
 	foreach (ParameterSpinBox *le, m_parameterSpinBoxes)
 	{
 		auto msg = QSharedPointer<SetParameterMessage>(new SetParameterMessage(le->parameterTypeId(), le->value()));
-		m_mainWindow->enqueueMessage(msg);
+		auto proxymsg = QSharedPointer<ProxyMessage>(new ProxyMessage());
+		proxymsg->setInnerMessage(msg);
+		m_mainWindow->enqueueMessage(proxymsg);
 
 		settings.setValue(QString("parameters/%1").arg(ParameterTypeIdToString(le->parameterTypeId())), le->value());
 	}
