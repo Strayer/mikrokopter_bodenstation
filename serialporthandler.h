@@ -20,7 +20,6 @@ public:
 	~SerialPortHandler();
 
 	QByteArray read(int length);
-	void sendTestPing();
 
 	void enqueueMessage(QSharedPointer<BaseMessage> msg);
 
