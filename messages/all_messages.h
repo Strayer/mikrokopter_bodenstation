@@ -7,5 +7,6 @@
 #include "setparametermessage.h"
 #include "getparametermessage.h"
 #include "curparametermessage.h"
+#include "proxymessage.h"
 
 #endif // ALL_MESSAGES_H

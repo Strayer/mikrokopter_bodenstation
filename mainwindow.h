@@ -18,6 +18,8 @@ public:
 
 	void enqueueMessage(QSharedPointer<BaseMessage> msg);
 
+	void keyReleaseEvent(QKeyEvent *event);
+
 private:
 	SerialPortHandler *serial;
 	QThread serialPortThread;
@@ -31,7 +33,8 @@ private:
 signals:
 
 public slots:
-	void buttonClicked();
+	void sendPingButtonClicked();
+	void sendProxyPingButtonClicked();
 
 	void newMessageReceived(QSharedPointer<BaseMessage> msg);
 	void messageSent(QSharedPointer<BaseMessage> msg);

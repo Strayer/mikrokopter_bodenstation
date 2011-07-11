@@ -14,6 +14,8 @@ public:
     CameraWidget();
 	void sendImage(cv::Mat *img);
 
+	int heightForWidth(int w) const;
+
 private slots:
 	void processCam();
 

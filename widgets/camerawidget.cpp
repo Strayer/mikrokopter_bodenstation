@@ -62,3 +62,8 @@ void CameraWidget::processCam()
 		QTimer::singleShot(25, this, SLOT(processCam()));
 	}
 }
+
+int CameraWidget::heightForWidth(int w) const
+{
+	return w / 4 * 3;
+}

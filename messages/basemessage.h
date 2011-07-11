@@ -23,12 +23,15 @@ public:
 	class MessageTypes {
 	public:
 		enum {
-			PROXY_MESSAGE = 0x000000,
-			SET_PARAMETER = 0x000001,
-			CUR_PARAMETER = 0x000002,
-			GET_PARAMETER = 0x000003,
-			PING = 0x000004,
-			PONG = 0x000005
+			PROXY_MESSAGE = 0x000002,
+			SET_PARAMETER = 0x000003,
+			CUR_PARAMETER = 0x000004,
+			GET_PARAMETER = 0x000005,
+			PING = 0x000006,
+			PONG = 0x000007,
+			NOP = 0x000000,
+			ACK = 0x000001,
+			SET_LEDS = 0x000008
 		};
 	};
 
@@ -36,8 +39,6 @@ public:
 
 	virtual void setData();
 	virtual QString toString();
-
-protected:
 	virtual QByteArray prepareData();
 
 private:

@@ -41,26 +41,41 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	msgList = new QListWidget();
 	layout->addWidget(msgList);
+
+	QHBoxLayout *buttonLayout = new QHBoxLayout();
+	QPushButton *button2 = new QPushButton();
+	button2->setText("ProxyPing senden");
+	buttonLayout->addWidget(button2);
 	QPushButton *button = new QPushButton();
 	button->setText("Ping senden");
-	layout->addWidget(button);
+	buttonLayout->addWidget(button);
+	layout->addLayout(buttonLayout);
 
 	ParametersWidget *parametersWidget = new ParametersWidget(this);
 	layout->addWidget(parametersWidget);
 
 	CameraWidget *cameraWidget = new CameraWidget();
-	layout->addWidget(cameraWidget);
+	layout->addWidget(cameraWidget, 0, Qt::AlignCenter);
 
 	setCentralWidget(new QWidget());
 	centralWidget()->setLayout(layout);
 
-	connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()));
+	connect(button, SIGNAL(clicked()), this, SLOT(sendPingButtonClicked()));
+	connect(button2, SIGNAL(clicked()), this, SLOT(sendProxyPingButtonClicked()));
 }
 
-void MainWindow::buttonClicked()
+void MainWindow::sendPingButtonClicked()
 {
-	//for (int i = 0; i < 2000; i++)
-	serial->sendTestPing();
+	auto msg = QSharedPointer<BaseMessage>(new PingMessage());
+	serial->enqueueMessage(msg);
+}
+
+void MainWindow::sendProxyPingButtonClicked()
+{
+	auto msg = QSharedPointer<BaseMessage>(new PingMessage());
+	auto msg2 = QSharedPointer<ProxyMessage>(new ProxyMessage());
+	msg2->setInnerMessage(msg);
+	serial->enqueueMessage(msg2);
 }
 
 void MainWindow::newMessageReceived(QSharedPointer<BaseMessage> msg)
@@ -95,4 +110,12 @@ void MainWindow::closeEvent(QCloseEvent *)
 void MainWindow::enqueueMessage(QSharedPointer<BaseMessage> msg)
 {
 	serial->enqueueMessage(msg);
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_F11)
+		setWindowState(windowState() ^ Qt::WindowFullScreen);
+	else
+		QMainWindow::keyReleaseEvent(event);
 }

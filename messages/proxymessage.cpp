@@ -1,21 +1,25 @@
 #include "proxymessage.h"
+#include "helper_functions.h"
 
 ProxyMessage::ProxyMessage()
 {
 }
 
-void ProxyMessage::setInnerData(int messageType, QByteArray data)
+void ProxyMessage::setInnerMessage(QSharedPointer<BaseMessage> msg)
 {
-	m_innerMessageType = messageType;
-	m_innerData = data;
+	m_innerMessage = msg;
 }
 
 QByteArray ProxyMessage::prepareData()
 {
-	return m_innerData;
+	QByteArray type = intToQByteArray(m_innerMessage->messageType(), 3);
+	QByteArray data = m_innerMessage->prepareData();
+	QByteArray innerData = QByteArray().append(type).append(data);
+
+	return intToQByteArray(innerData.size(), 2).append(innerData);
 }
 
 QString ProxyMessage::toString()
 {
-	return QString("ProxyMessage");
+	return QString("ProxyMessage: %1").arg(m_innerMessage->toString());
 }

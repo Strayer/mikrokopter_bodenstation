@@ -2,18 +2,18 @@
 #define PROXYMESSAGE_H
 
 #include "basemessage.h"
+#include <QSharedPointer>
 
 class ProxyMessage : public BaseMessage
 {
 public:
     ProxyMessage();
 
-	void setInnerData(int messageType, QByteArray data);
+	void setInnerMessage(QSharedPointer<BaseMessage> msg);
 	QString toString();
 
 private:
-	int m_innerMessageType;
-	QByteArray m_innerData;
+	QSharedPointer<BaseMessage> m_innerMessage;
 
 	QByteArray prepareData();
 };

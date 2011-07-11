@@ -56,7 +56,9 @@ void SerialPortHandler::serialSlotReceivedData(const char *data, size_t size)
 void SerialPortHandler::sendTestPing()
 {
 	auto msg = QSharedPointer<BaseMessage>(new PingMessage());
-	enqueueMessage(msg);
+	auto msg2 = QSharedPointer<ProxyMessage>(new ProxyMessage());
+	msg2->setInnerMessage(msg);
+	enqueueMessage(msg2);
 }
 
 void SerialPortHandler::enqueueMessage(QSharedPointer<BaseMessage> msg)
