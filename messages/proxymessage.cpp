@@ -1,7 +1,7 @@
 #include "proxymessage.h"
 #include "helper_functions.h"
 
-ProxyMessage::ProxyMessage()
+ProxyMessage::ProxyMessage() : BaseMessage(BaseMessage::MessageTypes::PROXY_MESSAGE)
 {
 }
 
