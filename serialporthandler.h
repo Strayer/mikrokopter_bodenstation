@@ -11,6 +11,8 @@ class QWaitCondition;
 #include <QQueue>
 #include <QSharedPointer>
 
+#define MAX_SERIAL_SEND_BUFFER 128
+
 class SerialPortHandler : public QObject
 {
 	Q_OBJECT
@@ -36,8 +38,12 @@ private:
 	CallbackAsyncSerial serial;
 	SerialPort serialPort;
 
+	int m_remainingSendBuffer;
+
 	QMutex *m_enqueueMessageMutex;
-	QWaitCondition *m_waitCondition;
+	QMutex *m_resetSendBufferMutex;
+	QWaitCondition *m_emptyQueueWaitCondition;
+	QWaitCondition *m_fullBufferWaitCondition;
 	QQueue< QSharedPointer<BaseMessage> > *m_messageQueue;
 
 	int m_messageProcessingState;
