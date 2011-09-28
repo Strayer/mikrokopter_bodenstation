@@ -8,5 +8,6 @@
 #include "getparametermessage.h"
 #include "curparametermessage.h"
 #include "proxymessage.h"
+#include "cleartosendmessage.h"
 
 #endif // ALL_MESSAGES_H

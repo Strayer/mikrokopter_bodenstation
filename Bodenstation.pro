@@ -18,7 +18,8 @@ HEADERS += \
     messages/curparametermessage.h \
     messages/parameter_type_ids.h \
     messages/proxymessage.h \
-    widgets/camerawidget.h
+    widgets/camerawidget.h \
+    messages/cleartosendmessage.h
 
 SOURCES += \
 	main.cpp \
@@ -37,7 +38,8 @@ SOURCES += \
     messages/getparametermessage.cpp \
     messages/curparametermessage.cpp \
     messages/proxymessage.cpp \
-    widgets/camerawidget.cpp
+    widgets/camerawidget.cpp \
+    messages/cleartosendmessage.cpp
 
 FORMS += \
 	serialportdialog.ui
@@ -57,5 +59,7 @@ RESOURCES += \
     resources.qrc
 
 RC_FILE = icon.rc
+
+
 
 

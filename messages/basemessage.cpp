@@ -73,6 +73,9 @@ BaseMessage* BaseMessage::fromRawData(QByteArray rawData)
 	case MessageTypes::PONG:
 		msg = PongMessage::fromRawData(data);
 		break;
+	case MessageTypes::CLEAR_TO_SEND:
+		msg = new ClearToSendMessage(); // Die hat eh kine Daten...
+		break;
 	case MessageTypes::CUR_PARAMETER:
 		msg = CurParameterMessage::fromRawData(data);
 		break;
