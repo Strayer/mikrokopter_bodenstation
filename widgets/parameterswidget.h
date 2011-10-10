@@ -1,11 +1,14 @@
 #ifndef PARAMETERSWIDGET_H
 #define PARAMETERSWIDGET_H
 
-#include <QWidget>
 #include <QMap>
 #include <QString>
+#include <QWidget>
 #include <QSpinBox>
 #include "mainwindow.h"
+
+class QToolButton;
+class QPushButton;
 
 class ParameterSpinBox : public QSpinBox
 {
@@ -28,16 +31,28 @@ class ParametersWidget : public QWidget
     Q_OBJECT
 public:
 	explicit ParametersWidget(MainWindow *mainWindow, QWidget *parent = 0);
+	~ParametersWidget();
+
+	void setParameterSpinBoxValue(int parameterTypeId, int newValue);
 
 private:
 	QList<ParameterSpinBox*> m_parameterSpinBoxes;
 	MainWindow *m_mainWindow;
+	QToolButton *profileButton;
+	QPushButton *sendParametersButton;
+	QSettings *settings;
+
+	QString activeProfile;
+
+	void rebuildProfileMenu();
 
 signals:
 
 public slots:
 	void sendParameters();
 	void getParameters();
+	void changeProfile(QAction *action);
+	void saveProfile();
 };
 
 #endif // PARAMETERSWIDGET_H

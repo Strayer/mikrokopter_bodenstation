@@ -9,8 +9,8 @@
 #include <QtGui>
 #include <QtCore>
 
-#include <widgets/parameterswidget.h>
 #include <widgets/camerawidget.h>
+#include <widgets/parameterswidget.h>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	buttonLayout->addWidget(button);
 	layout->addLayout(buttonLayout);
 
-	ParametersWidget *parametersWidget = new ParametersWidget(this);
+	parametersWidget = new ParametersWidget(this);
 	layout->addWidget(parametersWidget);
 
 	CameraWidget *cameraWidget = new CameraWidget();
@@ -85,6 +85,12 @@ void MainWindow::newMessageReceived(QSharedPointer<BaseMessage> msg)
 		scrollDown = true;
 
 	msgList->addItem(new QListWidgetItem(QIcon(":/icons/arrow-left"), QString("%1: %2").arg(QDateTime::currentDateTime().toString()).arg(msg->toString())));
+
+	if (msg->messageType() == BaseMessage::MessageTypes::CUR_PARAMETER)
+	{
+		QSharedPointer<CurParameterMessage> curParameterMsg = msg.staticCast<CurParameterMessage>();
+		parametersWidget->setParameterSpinBoxValue(curParameterMsg->parameterTypeId(), curParameterMsg->value());
+	}
 
 	if (scrollDown)
 		msgList->scrollToBottom();

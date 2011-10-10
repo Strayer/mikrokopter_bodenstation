@@ -9,6 +9,7 @@
 
 class SerialPortHandler;
 class QListWidget;
+class ParametersWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -27,6 +28,7 @@ private:
 	QSettings settings;
 
 	QListWidget *msgList;
+	ParametersWidget *parametersWidget;
 
 	void closeEvent(QCloseEvent *event);
 
