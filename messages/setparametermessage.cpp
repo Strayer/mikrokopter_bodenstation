@@ -12,7 +12,7 @@ QByteArray SetParameterMessage::prepareData()
 	QByteArray tmp;
 
 	tmp.append(intToQByteArray(m_parameterTypeId, 2));
-	tmp.append(intToQByteArray(m_value, 4));
+	tmp.append(intToQByteArray(m_value+2147483648, 4));
 
 	return tmp;
 }
