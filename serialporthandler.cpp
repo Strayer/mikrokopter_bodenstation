@@ -52,7 +52,6 @@ void SerialPortHandler::serialSlotReceivedData(const char *data, size_t size)
 		if (m_messageProcessingState == MessageProcessingState::AfterMessage)
 		{
 			auto pointer = QSharedPointer<BaseMessage>(BaseMessage::fromRawData(m_messageProcessingBuffer));
-			emit newMessageReceived(pointer);
 
 			if (pointer->messageType() == BaseMessage::MessageTypes::CLEAR_TO_SEND)
 			{
@@ -61,6 +60,8 @@ void SerialPortHandler::serialSlotReceivedData(const char *data, size_t size)
 				m_resetSendBufferMutex->unlock();
 				m_fullBufferWaitCondition->wakeAll();
 			}
+			else
+				emit newMessageReceived(pointer);
 		}
 	}
 }
@@ -68,7 +69,7 @@ void SerialPortHandler::serialSlotReceivedData(const char *data, size_t size)
 void SerialPortHandler::enqueueMessage(QSharedPointer<BaseMessage> msg)
 {
 	QMutexLocker locker(m_enqueueMessageMutex);
-	qDebug() << "Fuege Nachricht" << QString::number(msg->messageType()).toAscii().toHex() << "zum Queue hinzu";
+	qDebug() << "Nachricht an den Sendequeue angehaengt:" << msg->toString();
 	m_messageQueue->enqueue(msg);
 	m_emptyQueueWaitCondition->wakeAll();
 }
@@ -84,26 +85,36 @@ void SerialPortHandler::start()
 		{
 			qDebug() << "Keine Nachrichten mehr im Queue... warte auf neue Nachrichten";
 			m_emptyQueueWaitCondition->wait(m_enqueueMessageMutex);
-			qDebug() << "waitCondition gefeuert";
 		}
 		QSharedPointer<BaseMessage> msg = m_messageQueue->dequeue();
 		m_enqueueMessageMutex->unlock();
 
-		qDebug() << "Sende Nachricht" << QString::number(msg->messageType()).toAscii().toHex();
+		qDebug() << "Sende Nachricht" << msg->toString();
 
 		QByteArray encodedMessage = msg->encodeForWriting();
 
 		m_resetSendBufferMutex->lock();
+
 		if (encodedMessage.size() > m_remainingSendBuffer)
 		{
+			// Wenn noch etwas von der Nachricht in den Puffer passt schneiden wir so viel ab wie noch geht
+			if (m_remainingSendBuffer > 0)
+			{
+				serial.write(encodedMessage.left(m_remainingSendBuffer).constData(), m_remainingSendBuffer);
+				m_remainingSendBuffer = 0;
+				encodedMessage = encodedMessage.mid(m_remainingSendBuffer);
+			}
+
 			qDebug() << "Nachrichtensendepuffer voll... warte auf CLEAR_TO_SEND";
 			m_fullBufferWaitCondition->wait(m_resetSendBufferMutex);
 			qDebug() << "CLEAR_TO_SEND, Nachrichtensendepuffer zurückgesetzt";
 		}
+
 		m_remainingSendBuffer-= encodedMessage.size();
+		serial.write(encodedMessage.constData(), encodedMessage.size());
+
 		m_resetSendBufferMutex->unlock();
 
-		serial.write(encodedMessage.constData(), encodedMessage.size());
 		emit messageSent(msg);
 	}
 }
