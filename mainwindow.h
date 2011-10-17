@@ -41,6 +41,8 @@ public slots:
 	void newMessageReceived(QSharedPointer<BaseMessage> msg);
 	void messageSent(QSharedPointer<BaseMessage> msg);
 
+private slots:
+	void initialize();
 };
 
 #endif // MAINWINDOW_H

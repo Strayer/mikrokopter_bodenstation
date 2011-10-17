@@ -19,49 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	setWindowTitle(tr("Bodenstation-Ork"));
 	setMinimumWidth(500);
 
-	restoreGeometry(settings.value("window/geometry").toByteArray());
-
-	// Erstmal müssen wir uns einen Serial Port holen
-	SerialPortDialog *dlg = new SerialPortDialog(this);
-	if (dlg->exec() == QDialog::Rejected)
-	{
-		QTimer::singleShot(0, this, SLOT(close()));
-		return;
-	}
-
-	SerialPort port = dlg->getSelectedSerialPort();
-	serial = new SerialPortHandler(port);
-	serial->moveToThread(&serialPortThread);
-	connect(&serialPortThread, SIGNAL(started()), serial, SLOT(start()));
-	connect(serial, SIGNAL(newMessageReceived(QSharedPointer<BaseMessage>)), this, SLOT(newMessageReceived(QSharedPointer<BaseMessage>)));
-	connect(serial, SIGNAL(messageSent(QSharedPointer<BaseMessage>)), this, SLOT(messageSent(QSharedPointer<BaseMessage>)));
-	serialPortThread.start();
-
-	QVBoxLayout *layout = new QVBoxLayout();
-
-	msgList = new QListWidget();
-	layout->addWidget(msgList);
-
-	QHBoxLayout *buttonLayout = new QHBoxLayout();
-	QPushButton *button2 = new QPushButton();
-	button2->setText("ProxyPing senden");
-	buttonLayout->addWidget(button2);
-	QPushButton *button = new QPushButton();
-	button->setText("Ping senden");
-	buttonLayout->addWidget(button);
-	layout->addLayout(buttonLayout);
-
-	parametersWidget = new ParametersWidget(this);
-	layout->addWidget(parametersWidget);
-
-	CameraWidget *cameraWidget = new CameraWidget();
-	layout->addWidget(cameraWidget, 0, Qt::AlignCenter);
-
-	setCentralWidget(new QWidget());
-	centralWidget()->setLayout(layout);
-
-	connect(button, SIGNAL(clicked()), this, SLOT(sendPingButtonClicked()));
-	connect(button2, SIGNAL(clicked()), this, SLOT(sendProxyPingButtonClicked()));
+	QTimer::singleShot(0, this, SLOT(initialize()));
 }
 
 void MainWindow::sendPingButtonClicked()
@@ -124,4 +82,51 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 		setWindowState(windowState() ^ Qt::WindowFullScreen);
 	else
 		QMainWindow::keyReleaseEvent(event);
+}
+
+void MainWindow::initialize()
+{
+	restoreGeometry(settings.value("window/geometry").toByteArray());
+
+	// Erstmal müssen wir uns einen Serial Port holen
+	SerialPortDialog *dlg = new SerialPortDialog(this);
+	if (dlg->exec() == QDialog::Rejected)
+	{
+		QTimer::singleShot(0, this, SLOT(close()));
+		return;
+	}
+
+	SerialPort port = dlg->getSelectedSerialPort();
+	serial = new SerialPortHandler(port);
+	serial->moveToThread(&serialPortThread);
+	connect(&serialPortThread, SIGNAL(started()), serial, SLOT(start()));
+	connect(serial, SIGNAL(newMessageReceived(QSharedPointer<BaseMessage>)), this, SLOT(newMessageReceived(QSharedPointer<BaseMessage>)));
+	connect(serial, SIGNAL(messageSent(QSharedPointer<BaseMessage>)), this, SLOT(messageSent(QSharedPointer<BaseMessage>)));
+	serialPortThread.start();
+
+	QVBoxLayout *layout = new QVBoxLayout();
+
+	msgList = new QListWidget();
+	layout->addWidget(msgList);
+
+	QHBoxLayout *buttonLayout = new QHBoxLayout();
+	QPushButton *button2 = new QPushButton();
+	button2->setText("ProxyPing senden");
+	buttonLayout->addWidget(button2);
+	QPushButton *button = new QPushButton();
+	button->setText("Ping senden");
+	buttonLayout->addWidget(button);
+	layout->addLayout(buttonLayout);
+
+	parametersWidget = new ParametersWidget(this);
+	layout->addWidget(parametersWidget);
+
+//	CameraWidget *cameraWidget = new CameraWidget();
+//	layout->addWidget(cameraWidget, 0, Qt::AlignCenter);
+
+	setCentralWidget(new QWidget());
+	centralWidget()->setLayout(layout);
+
+	connect(button, SIGNAL(clicked()), this, SLOT(sendPingButtonClicked()));
+	connect(button2, SIGNAL(clicked()), this, SLOT(sendProxyPingButtonClicked()));
 }
