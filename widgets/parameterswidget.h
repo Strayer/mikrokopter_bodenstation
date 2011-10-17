@@ -9,6 +9,8 @@
 
 class QToolButton;
 class QPushButton;
+class QAction;
+class QSignalMapper;
 
 class ParameterSpinBox : public QSpinBox
 {
@@ -28,21 +30,27 @@ private:
 
 class ParametersWidget : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	explicit ParametersWidget(MainWindow *mainWindow, QWidget *parent = 0);
 	~ParametersWidget();
 
-	void setParameterSpinBoxValue(int parameterTypeId, int newValue);
+	void setParameterSpinBoxValue(int parameterTypeId, int newValue, bool dontSetDirty = false);
+
+	bool isDirty();
+	void setDirty(bool toggle);
 
 private:
 	QList<ParameterSpinBox*> m_parameterSpinBoxes;
 	MainWindow *m_mainWindow;
-	QToolButton *profileButton;
-	QPushButton *sendParametersButton;
-	QSettings *settings;
+	QToolButton *m_profileButton;
+	QPushButton *m_sendParametersButton;
+	QSettings *m_settings;
+	bool m_dirty;
+	QSignalMapper *m_signalMapper;
 
-	QString activeProfile;
+	QString m_activeProfile;
+	QAction *m_activeProfileAction;
 
 	void rebuildProfileMenu();
 
@@ -53,6 +61,7 @@ public slots:
 	void getParameters();
 	void changeProfile(QAction *action);
 	void saveProfile();
+	void parameterChanged(QWidget *widget);
 };
 
 #endif // PARAMETERSWIDGET_H
