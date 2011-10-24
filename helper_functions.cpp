@@ -34,6 +34,8 @@ QString ParameterTypeIdToString(uint16_t typeId)
 {
 	if (typeId == Parameters::MISC_ACC_HORIZ_KI)
 		return QString("MISC_ACC_HORIZ_KI");
+	else if (typeId == Parameters::MISC_ACC_RANGE)
+		return QString("MISC_ACC_RANGE");
 	else if (typeId == Parameters::MISC_ACC_VERT_KI)
 		return QString("MISC_ACC_VERT_KI");
 	else if (typeId == Parameters::MISC_COMPASS_KI)
