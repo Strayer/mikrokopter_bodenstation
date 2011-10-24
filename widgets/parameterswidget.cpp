@@ -243,16 +243,13 @@ void ParametersWidget::getParameters()
 
 void ParametersWidget::sendParameters()
 {
-	QSettings settings;
-
 	foreach (ParameterSpinBox *le, m_parameterSpinBoxes)
 	{
 		auto msg = QSharedPointer<SetParameterMessage>(new SetParameterMessage(le->parameterTypeId(), le->value()));
 		auto proxymsg = QSharedPointer<ProxyMessage>(new ProxyMessage());
 		proxymsg->setInnerMessage(msg);
 		m_mainWindow->enqueueMessage(proxymsg);
-
-		settings.setValue(QString("parameters/%1").arg(ParameterTypeIdToString(le->parameterTypeId())), le->value());
+		le->setDisabled(true);
 	}
 }
 
@@ -377,6 +374,7 @@ void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValu
 		if (le->parameterTypeId() == parameterTypeId)
 		{
 			le->setValue(newValue);
+			le->setDisabled(false);
 			if (!dontSetDirty)
 				setDirty(true);
 			break;
