@@ -47,7 +47,7 @@ void MainWindow::newMessageReceived(QSharedPointer<BaseMessage> msg)
 	if (msg->messageType() == BaseMessage::MessageTypes::CUR_PARAMETER)
 	{
 		QSharedPointer<CurParameterMessage> curParameterMsg = msg.staticCast<CurParameterMessage>();
-		parametersWidget->setParameterSpinBoxValue(curParameterMsg->parameterTypeId(), curParameterMsg->value());
+		parametersWidget->setParameterSpinBoxValue(curParameterMsg->parameterTypeId(), curParameterMsg->value(), true);
 	}
 
 	if (scrollDown)

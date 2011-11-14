@@ -35,7 +35,7 @@ public:
 	explicit ParametersWidget(MainWindow *mainWindow, QWidget *parent = 0);
 	~ParametersWidget();
 
-	void setParameterSpinBoxValue(int parameterTypeId, int newValue, bool dontSetDirty = false);
+	void setParameterSpinBoxValue(int parameterTypeId, int newValue, bool suppressChangedEvent = false);
 
 	bool isDirty();
 	void setDirty(bool toggle);

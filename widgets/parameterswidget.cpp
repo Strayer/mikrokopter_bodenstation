@@ -405,17 +405,18 @@ void ParametersWidget::rebuildProfileMenu()
 	profileButtonMenu->setDefaultAction(readOnlyAction);
 }
 
-void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValue, bool dontSetDirty)
+void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValue, bool suppressChangedEvent)
 {
 	foreach (ParameterSpinBox *le, m_parameterSpinBoxes)
 	{
 		if (le->parameterTypeId() == parameterTypeId)
 		{
-			int oldValue = le->value();
+			if (suppressChangedEvent)
+				le->blockSignals(true);
 			le->setValue(newValue);
+			if (suppressChangedEvent)
+				le->blockSignals(false);
 			le->setDisabled(m_activeProfileAction->data().toString() == "read_only");
-			if (!dontSetDirty && m_activeProfileAction->data().toString() != "read_only" && oldValue != newValue)
-				setDirty(true);
 			break;
 		}
 	}
