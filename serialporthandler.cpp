@@ -97,16 +97,10 @@ void SerialPortHandler::start()
 
 		if (encodedMessage.size() > m_remainingSendBuffer)
 		{
-			// Wenn noch etwas von der Nachricht in den Puffer passt schneiden wir so viel ab wie noch geht
-			if (m_remainingSendBuffer > 0)
-			{
-				serial.write(encodedMessage.left(m_remainingSendBuffer).constData(), m_remainingSendBuffer);
-				m_remainingSendBuffer = 0;
-				encodedMessage = encodedMessage.mid(m_remainingSendBuffer);
-			}
-
 			qDebug() << "Nachrichtensendepuffer voll... warte auf CLEAR_TO_SEND";
-			m_fullBufferWaitCondition->wait(m_resetSendBufferMutex);
+			// Solange der Puffer nicht wieder freigegeben wurde wird jede Sekunde Müll geschickt um ein CLEAR_TO_SEND anzuregen
+			while(m_remainingSendBuffer < encodedMessage.size() && !m_fullBufferWaitCondition->wait(m_resetSendBufferMutex, 1000))
+				serial.write(QByteArray(1, ETB).constData(), 1);
 			qDebug() << "CLEAR_TO_SEND, Nachrichtensendepuffer zurückgesetzt";
 		}
 
