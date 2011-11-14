@@ -411,9 +411,10 @@ void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValu
 	{
 		if (le->parameterTypeId() == parameterTypeId)
 		{
+			int oldValue = le->value();
 			le->setValue(newValue);
 			le->setDisabled(m_activeProfileAction->data().toString() == "read_only");
-			if (!dontSetDirty && m_activeProfileAction->data().toString() != "read_only")
+			if (!dontSetDirty && m_activeProfileAction->data().toString() != "read_only" && oldValue != newValue)
 				setDirty(true);
 			break;
 		}
