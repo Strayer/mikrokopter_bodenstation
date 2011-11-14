@@ -2,7 +2,7 @@
 #include "helper_functions.h"
 #include <QtCore>
 
-SetParameterMessage::SetParameterMessage(uint16_t parameterTypeId, uint32_t value)
+SetParameterMessage::SetParameterMessage(uint16_t parameterTypeId, int32_t value)
 	: m_parameterTypeId(parameterTypeId), m_value(value), BaseMessage(BaseMessage::MessageTypes::SET_PARAMETER)
 {
 }
@@ -12,7 +12,7 @@ QByteArray SetParameterMessage::prepareData()
 	QByteArray tmp;
 
 	tmp.append(intToQByteArray(m_parameterTypeId, 2));
-	tmp.append(intToQByteArray(m_value+2147483648, 4));
+	tmp.append(intToQByteArray((int64_t) m_value+2147483648, 4));
 
 	return tmp;
 }

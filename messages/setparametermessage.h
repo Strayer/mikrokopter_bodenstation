@@ -7,13 +7,13 @@
 class SetParameterMessage : public BaseMessage
 {
 public:
-	SetParameterMessage(uint16_t parameterTypeId, uint32_t value);
+	SetParameterMessage(uint16_t parameterTypeId, int32_t value);
 
 	QString toString();
 
 private:
 	uint16_t m_parameterTypeId;
-	uint32_t m_value;
+	int32_t m_value;
 
 private:
 	QByteArray prepareData();

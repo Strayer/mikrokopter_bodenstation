@@ -72,6 +72,8 @@ QString ParameterTypeIdToString(uint16_t typeId)
 		return QString("ROLL_KP");
 	else if (typeId == Parameters::ROLL_RESOLUTIONFILTER)
 		return QString("ROLL_RESOLUTIONFILTER");
+	else if (typeId == Parameters::SPECIAL_BATT_VOLTAGE)
+		return QString("SPECIAL_BATT_VOLTAGE");
 	else if (typeId == Parameters::YAW_AVERAGINGFILTER)
 		return QString("YAW_AVERAGINGFILTER");
 	else if (typeId == Parameters::YAW_ILIMIT)

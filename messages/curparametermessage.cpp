@@ -10,7 +10,7 @@ CurParameterMessage* CurParameterMessage::fromRawData(QByteArray data)
 {
 	CurParameterMessage *tmp = new CurParameterMessage();
 	tmp->setParameterTypeId(QByteArrayToInt(data.left(2)));
-	tmp->setValue(QByteArrayToInt(data.right(4))-2147483648);
+	tmp->setValue((int64_t) QByteArrayToInt(data.right(4))-2147483648);
 
 	return tmp;
 }
@@ -20,7 +20,7 @@ uint16_t CurParameterMessage::parameterTypeId()
 	return m_parameterTypeId;
 }
 
-uint32_t CurParameterMessage::value()
+int32_t CurParameterMessage::value()
 {
 	return m_value;
 }
