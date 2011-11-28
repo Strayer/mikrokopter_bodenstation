@@ -356,7 +356,7 @@ void ParametersWidget::changeProfile(QAction *action)
 
 		foreach (ParameterSpinBox *le, m_parameterSpinBoxes)
 		{
-			le->setDisabled(readOnly);
+			le->setReadOnly(readOnly);
 			le->blockSignals(true);
 			le->setValue(0);
 			le->blockSignals(false);
@@ -416,7 +416,7 @@ void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValu
 			le->setValue(newValue);
 			if (suppressChangedEvent)
 				le->blockSignals(false);
-			le->setDisabled(m_activeProfileAction->data().toString() == "read_only");
+			le->setReadOnly(m_activeProfileAction->data().toString() == "read_only");
 			break;
 		}
 	}
