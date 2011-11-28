@@ -39,8 +39,15 @@ void MainWindow::sendProxyPingButtonClicked()
 void MainWindow::newMessageReceived(QSharedPointer<BaseMessage> msg)
 {
 	bool scrollDown = false;
-	if (msgList->verticalScrollBar()->sliderPosition() == msgList->verticalScrollBar()->maximum())
-		scrollDown = true;
+
+	if (msgList->count() > 300)
+		msgList->takeItem(0);
+	else
+	{
+		// Das mitscrollen ist nur sinnvoll solange die Liste nicht voll ist
+		if (msgList->verticalScrollBar()->sliderPosition() == msgList->verticalScrollBar()->maximum())
+			scrollDown = true;
+	}
 
 	msgList->addItem(new QListWidgetItem(QIcon(":/icons/arrow-left"), QString("%1: %2").arg(QDateTime::currentDateTime().toString()).arg(msg->toString())));
 
