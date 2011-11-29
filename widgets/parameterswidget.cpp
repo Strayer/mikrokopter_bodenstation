@@ -417,6 +417,7 @@ void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValu
 			if (suppressChangedEvent)
 				le->blockSignals(false);
 			le->setReadOnly(m_activeProfileAction->data().toString() == "read_only");
+			le->setDisabled(false);
 			break;
 		}
 	}
