@@ -14,6 +14,8 @@ class QSignalMapper;
 
 class ParameterSpinBox : public QSpinBox
 {
+	Q_OBJECT
+
 public:
 	ParameterSpinBox(int parameterTypeId, QWidget *parent = 0) : QSpinBox(parent), m_parameterTypeId(parameterTypeId)
 	{
