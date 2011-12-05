@@ -24,6 +24,7 @@ public:
 private:
 	SerialPortHandler *serial;
 	QThread serialPortThread;
+	QThread decimalDebugThread;
 
 	QSettings settings;
 

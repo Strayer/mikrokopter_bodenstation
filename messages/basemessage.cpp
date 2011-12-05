@@ -79,6 +79,9 @@ BaseMessage* BaseMessage::fromRawData(QByteArray rawData)
 	case MessageTypes::CUR_PARAMETER:
 		msg = CurParameterMessage::fromRawData(data);
 		break;
+	case MessageTypes::DECIMAL_DEBUG_DUMP:
+		msg = DecimalDebugDumpMessage::fromRawData(data);
+		break;
 	case MessageTypes::PING:
 		qDebug() << "BaseMessage::fromRawData: Nachricht PING kann nur gesendet werden";
 		break;

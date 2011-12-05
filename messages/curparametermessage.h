@@ -21,8 +21,6 @@ public:
 private:
 	uint16_t m_parameterTypeId;
 	int32_t m_value;
-
-private:
 	uint16_t _sequenceNumber;
 };
 

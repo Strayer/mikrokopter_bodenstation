@@ -19,7 +19,9 @@ HEADERS += \
     messages/parameter_type_ids.h \
     messages/proxymessage.h \
     widgets/camerawidget.h \
-    messages/cleartosendmessage.h
+    messages/cleartosendmessage.h \
+    messages/decimaldebugdumpmessage.h \
+    decimaldebughandler.h
 
 SOURCES += \
 	main.cpp \
@@ -39,7 +41,9 @@ SOURCES += \
     messages/curparametermessage.cpp \
     messages/proxymessage.cpp \
     widgets/camerawidget.cpp \
-    messages/cleartosendmessage.cpp
+    messages/cleartosendmessage.cpp \
+    messages/decimaldebugdumpmessage.cpp \
+    decimaldebughandler.cpp
 
 FORMS += \
 	serialportdialog.ui
@@ -59,6 +63,10 @@ RESOURCES += \
     resources.qrc
 
 RC_FILE = icon.rc
+
+
+
+
 
 
 

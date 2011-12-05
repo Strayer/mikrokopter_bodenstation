@@ -2,6 +2,7 @@
 #include "serialportdialog.h"
 
 #include "serialporthandler.h"
+#include "decimaldebughandler.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -38,6 +39,9 @@ void MainWindow::sendProxyPingButtonClicked()
 
 void MainWindow::newMessageReceived(QSharedPointer<BaseMessage> msg)
 {
+	if (msg->messageType() == BaseMessage::MessageTypes::DECIMAL_DEBUG_DUMP)
+		return;
+
 	bool scrollDown = false;
 
 	if (msgList->count() > 300)
@@ -110,6 +114,12 @@ void MainWindow::initialize()
 	connect(serial, SIGNAL(newMessageReceived(QSharedPointer<BaseMessage>)), this, SLOT(newMessageReceived(QSharedPointer<BaseMessage>)));
 	connect(serial, SIGNAL(messageSent(QSharedPointer<BaseMessage>)), this, SLOT(messageSent(QSharedPointer<BaseMessage>)));
 	serialPortThread.start();
+
+	DecimalDebugHandler *decimalDebugHandler = new DecimalDebugHandler();
+	decimalDebugHandler->moveToThread(&decimalDebugThread);
+	connect(&decimalDebugThread, SIGNAL(started()), decimalDebugHandler, SLOT(start()));
+	connect(serial, SIGNAL(newMessageReceived(QSharedPointer<BaseMessage>)), decimalDebugHandler, SLOT(newMessageReceived(QSharedPointer<BaseMessage>)));
+	decimalDebugThread.start();
 
 	QVBoxLayout *layout = new QVBoxLayout();
 
