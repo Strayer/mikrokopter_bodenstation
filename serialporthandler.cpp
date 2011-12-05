@@ -11,7 +11,7 @@ SerialPortHandler::SerialPortHandler(SerialPort serialPort, QObject *parent) : Q
 	m_messageQueue = new QQueue< QSharedPointer<BaseMessage> >();
 	m_emptyQueueWaitCondition = new QWaitCondition();
 	m_fullBufferWaitCondition = new QWaitCondition();
-	serial.open(QString(serialPort.deviceName()).toStdString(), 2400);
+	serial.open(QString(serialPort.deviceName()).toStdString(), 57600);
 	serial.setCallback(bind(&SerialPortHandler::serialSlotReceivedData, this, _1, _2));
 
 	m_remainingSendBuffer = MAX_SERIAL_SEND_BUFFER;
