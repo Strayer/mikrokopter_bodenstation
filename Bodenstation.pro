@@ -21,7 +21,8 @@ HEADERS += \
 #    widgets/camerawidget.h \
 	messages/cleartosendmessage.h \
 	messages/decimaldebugdumpmessage.h \
-	decimaldebughandler.h
+	decimaldebughandler.h \
+	widgets/parametercontrolwidget.h
 
 SOURCES += \
 	main.cpp \
@@ -43,7 +44,8 @@ SOURCES += \
 #    widgets/camerawidget.cpp \
 	messages/cleartosendmessage.cpp \
 	messages/decimaldebugdumpmessage.cpp \
-	decimaldebughandler.cpp
+	decimaldebughandler.cpp \
+	widgets/parametercontrolwidget.cpp
 
 FORMS += \
 	serialportdialog.ui

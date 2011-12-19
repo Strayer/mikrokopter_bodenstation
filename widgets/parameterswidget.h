@@ -2,33 +2,14 @@
 #define PARAMETERSWIDGET_H
 
 #include <QMap>
-#include <QString>
 #include <QWidget>
-#include <QSpinBox>
 #include "mainwindow.h"
+#include "widgets/parametercontrolwidget.h"
 
 class QToolButton;
 class QPushButton;
 class QAction;
 class QSignalMapper;
-
-class ParameterSpinBox : public QSpinBox
-{
-	Q_OBJECT
-
-public:
-	ParameterSpinBox(int parameterTypeId, QWidget *parent = 0) : QSpinBox(parent), m_parameterTypeId(parameterTypeId)
-	{
-		setMinimum(0);
-		setMaximum(16777216);
-	}
-
-public:
-	int parameterTypeId() { return m_parameterTypeId; }
-
-private:
-	int m_parameterTypeId;
-};
 
 class ParametersWidget : public QWidget
 {
@@ -37,13 +18,13 @@ public:
 	explicit ParametersWidget(MainWindow *mainWindow, QWidget *parent = 0);
 	~ParametersWidget();
 
-	void setParameterSpinBoxValue(int parameterTypeId, int newValue, bool suppressChangedEvent = false);
+	void setParameterSpinBoxValue(int parameterTypeId, int newValue);
 
 	bool isDirty();
 	void setDirty(bool toggle);
 
 private:
-	QList<ParameterSpinBox*> m_parameterSpinBoxes;
+	QList<ParameterControlWidget*> m_parameterControlWidgets;
 	MainWindow *m_mainWindow;
 	QToolButton *m_profileButton;
 	QPushButton *m_sendParametersButton;
