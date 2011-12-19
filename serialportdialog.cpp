@@ -42,7 +42,7 @@ void SerialPortDialog::findSerialPorts()
 
     ui->comboBox->clear();
 
-    for (int i = 0; i < ports.size(); i++)
+    for (uint i = 0; i < ports.size(); i++)
     {
         QString label = QString("COM%1 (%2)").arg(ports.at(i)).arg(QString::fromStdWString(friendlyNames.at(i)));
         SerialPort port = SerialPort(ports.at(i), friendlyNames.at(i));
