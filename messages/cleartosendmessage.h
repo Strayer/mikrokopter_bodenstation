@@ -6,7 +6,7 @@
 class ClearToSendMessage : public BaseMessage
 {
 public:
-    ClearToSendMessage();
+	ClearToSendMessage();
 
 	QString toString();
 };

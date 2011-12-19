@@ -6,24 +6,24 @@
 #include "SerialPort.h"
 
 namespace Ui {
-    class SerialPortDialog;
+class SerialPortDialog;
 }
 
 class SerialPortDialog : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit SerialPortDialog(QWidget *parent = 0);
-    ~SerialPortDialog();
+	explicit SerialPortDialog(QWidget *parent = 0);
+	~SerialPortDialog();
 
-    SerialPort getSelectedSerialPort();
+	SerialPort getSelectedSerialPort();
 
 private:
-    Ui::SerialPortDialog *ui;
+	Ui::SerialPortDialog *ui;
 
 private slots:
-    void findSerialPorts();
+	void findSerialPorts();
 };
 
 #endif // SERIALPORTDIALOG_H

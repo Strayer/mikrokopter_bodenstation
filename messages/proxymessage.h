@@ -7,7 +7,7 @@
 class ProxyMessage : public BaseMessage
 {
 public:
-    ProxyMessage();
+	ProxyMessage();
 
 	void setInnerMessage(QSharedPointer<BaseMessage> msg);
 	QString toString();

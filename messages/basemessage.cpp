@@ -37,9 +37,9 @@ QByteArray BaseMessage::encodeForWriting()
 	QByteArray data = prepareData();
 	QByteArray crc8 = BaseMessage::generateCRC8(QByteArray().append(type).append(data));
 
-//	qDebug() << "Type:" << type.toHex();
-//	qDebug() << "Data:" << data.toHex();
-//	qDebug() << "CRC8:" << crc8.toHex();
+	//qDebug() << "Type:" << type.toHex();
+	//qDebug() << "Data:" << data.toHex();
+	//qDebug() << "CRC8:" << crc8.toHex();
 
 	QByteArray tmp;
 	tmp.append(STX);
