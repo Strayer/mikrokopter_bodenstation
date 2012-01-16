@@ -54,9 +54,9 @@ LIBS+= -lwinspool
 
 DEFINES += _WIN32_WINNT=0x0501
 
-INCLUDEPATH+= E:/dev/lib/msvc_x86/boost-1.46.1/include# \
+INCLUDEPATH+= E:/dev/lib/msvc_x86/boost-1.48.0/include# \
 #	E:/dev/lib/msvc_x86_64/opencv-svn/include
-LIBS+= -LE:/dev/lib/msvc_x86/boost-1.46.1/lib \
+LIBS+= -LE:/dev/lib/msvc_x86/boost-1.48.0/lib \
 #	-LE:/dev/lib/msvc_x86_64/opencv-svn/lib \
 #	-lopencv_highgui229 \
 #	-lopencv_core229
