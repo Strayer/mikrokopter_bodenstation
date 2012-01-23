@@ -8,7 +8,7 @@
 
 #define create_parameter_widget(param_id, layout) { \
 	ParameterControlWidget *param_widget = new ParameterControlWidget(param_id, this); \
-	m_parameterControlWidgets.append(param_widget); \
+	m_parameterControlWidgets.insert(param_id, param_widget); \
 	layout->addWidget(param_widget); \
 	m_signalMapper->setMapping(param_widget, param_widget); \
 	connect(param_widget, SIGNAL(editingFinished()), m_signalMapper, SLOT(map())); \
@@ -265,15 +265,11 @@ void ParametersWidget::rebuildProfileMenu()
 
 void ParametersWidget::setParameterSpinBoxValue(int parameterTypeId, int newValue)
 {
-	foreach (ParameterControlWidget *le, m_parameterControlWidgets)
+	if (m_parameterControlWidgets.contains(parameterTypeId))
 	{
-		if (le->parameterTypeId() == parameterTypeId)
-		{
-			le->setValue(newValue);
-			le->setReadOnly(m_activeProfileAction->data().toString() == "read_only");
-			le->setDisabled(false);
-			break;
-		}
+		m_parameterControlWidgets.value(parameterTypeId)->setValue(newValue);
+		m_parameterControlWidgets.value(parameterTypeId)->setReadOnly(m_activeProfileAction->data().toString() == "read_only");
+		m_parameterControlWidgets.value(parameterTypeId)->setDisabled(false);
 	}
 }
 

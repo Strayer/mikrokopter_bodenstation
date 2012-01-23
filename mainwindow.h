@@ -42,6 +42,8 @@ public slots:
 	void newMessageReceived(QSharedPointer<BaseMessage> msg);
 	void messageSent(QSharedPointer<BaseMessage> msg);
 
+	void createBigNumbersDisplay();
+
 private slots:
 	void initialize();
 };

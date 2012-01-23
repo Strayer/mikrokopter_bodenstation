@@ -24,7 +24,7 @@ public:
 	void setDirty(bool toggle);
 
 private:
-	QList<ParameterControlWidget*> m_parameterControlWidgets;
+	QHash<int, ParameterControlWidget*> m_parameterControlWidgets;
 	MainWindow *m_mainWindow;
 	QToolButton *m_profileButton;
 	QPushButton *m_sendParametersButton;

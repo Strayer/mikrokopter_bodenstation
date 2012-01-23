@@ -12,6 +12,7 @@
 
 //#include <widgets/camerawidget.h>
 #include <widgets/parameterswidget.h>
+#include <widgets/bigparameterdisplaywidget.h>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
@@ -19,6 +20,20 @@ MainWindow::MainWindow(QWidget *parent) :
 	setWindowIcon(QIcon(":/icons/app-icon"));
 	setWindowTitle(tr("Bodenstation-Ork"));
 	setMinimumWidth(500);
+
+	QAction *quitAction = new QAction(this);
+	quitAction->setText(tr("&Beenden"));
+	connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+	QAction *bigNumbersWindowAction = new QAction(this);
+	bigNumbersWindowAction->setText(tr("Große &Zahlen Fenster"));
+	connect(bigNumbersWindowAction, SIGNAL(triggered()), this, SLOT(createBigNumbersDisplay()));
+
+	QMenu *fileMenu = menuBar()->addMenu(tr("&Datei"));
+	fileMenu->addAction(quitAction);
+
+	QMenu *viewMenu = menuBar()->addMenu(tr("&Ansicht"));
+	viewMenu->addAction(bigNumbersWindowAction);
 
 	QTimer::singleShot(0, this, SLOT(initialize()));
 }
@@ -146,4 +161,10 @@ void MainWindow::initialize()
 
 	connect(button, SIGNAL(clicked()), this, SLOT(sendPingButtonClicked()));
 	connect(button2, SIGNAL(clicked()), this, SLOT(sendProxyPingButtonClicked()));
+}
+
+void MainWindow::createBigNumbersDisplay()
+{
+	BigParameterDisplayWidget *blaaa = new BigParameterDisplayWidget(serial);
+	blaaa->show();
 }

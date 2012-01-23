@@ -1,6 +1,8 @@
 #ifndef PARAMETER_TYPE_IDS_H
 #define PARAMETER_TYPE_IDS_H
 
+#include <vector>
+
 class Parameters {
 public:
 	enum {
@@ -32,6 +34,37 @@ public:
 		MISC_ACC_RANGE = 0x000019,
 		SPECIAL_BATT_VOLTAGE = 0x00001a
 	};
+	static std::vector<int> getParameterVector() {
+		std::vector<int> v;
+		v.push_back(0x000000);
+		v.push_back(0x000001);
+		v.push_back(0x000002);
+		v.push_back(0x000003);
+		v.push_back(0x000004);
+		v.push_back(0x000005);
+		v.push_back(0x000006);
+		v.push_back(0x000007);
+		v.push_back(0x000008);
+		v.push_back(0x000009);
+		v.push_back(0x00000a);
+		v.push_back(0x00000b);
+		v.push_back(0x00000c);
+		v.push_back(0x00000d);
+		v.push_back(0x00000e);
+		v.push_back(0x00000f);
+		v.push_back(0x000010);
+		v.push_back(0x000011);
+		v.push_back(0x000012);
+		v.push_back(0x000013);
+		v.push_back(0x000014);
+		v.push_back(0x000015);
+		v.push_back(0x000016);
+		v.push_back(0x000017);
+		v.push_back(0x000018);
+		v.push_back(0x000019);
+		v.push_back(0x00001a);
+		return v;
+	}
 };
 
 #endif // PARAMETER_TYPE_IDS_H
