@@ -23,7 +23,6 @@ BigParameterDisplayWidget::BigParameterDisplayWidget(SerialPortHandler *handler,
 
 BigParameterDisplayWidget::~BigParameterDisplayWidget()
 {
-	qDebug() << "bye bye";
 }
 
 void BigParameterDisplayWidget::newMessageReceived(QSharedPointer<BaseMessage> msg)
